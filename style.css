@@ -41,18 +41,37 @@ body{
 
 .d1-right{
     width: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.d-1-image{
+    border: 1px solid black;
+    background-color: white;
+    text-align: center;
+    font-size: 14px;
+}
+
+.d-1-image img{
+    width: 100%;
+}
+
+.d-1-image.small{
+    width: 70%;
+    font-size: 80%;
 }
 
 .d1-left{
     flex: 1;
     display: flex;
     flex-direction: column;
+    margin-left: 5px;
 }
 
 .d-1-span{
     height: 50px;
     margin-top: 5px;
-    margin-left: 5px;
 }
 
 
