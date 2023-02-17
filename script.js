@@ -8,6 +8,8 @@ let numeros = document.querySelector('.d-1-voto-numero');
 let etapaAtual = 0;
 let numero = '';
 let votoBranco = false;
+let votos = [];
+
 
 function comecarEtapa(){
     numero = ``;
@@ -115,8 +117,16 @@ function confirma(){
     let votoConfimardo = false;
     if(votoBranco){
         votoConfimardo = true;
+        votos.push({
+            etapa:etapas[etapaAtual].titulo,
+            voto:'branco'
+        })
     } else if(numero.length === etapa.numeros){
         votoConfimardo = true;
+        votos.push({
+            etapa:etapas[etapaAtual].titulo,
+            voto: numero
+        })
     }
 
     if(votoConfimardo){
@@ -132,6 +142,7 @@ function confirma(){
             aviso.style.display = `none`
             imagens.innerHTML = ``;
             numeros.innerHTML = '';
+            console.log(votos)
         }
     }
 }
