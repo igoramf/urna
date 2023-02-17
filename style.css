@@ -174,4 +174,8 @@ body{
 
 .fim{
     font-size: 60px;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
