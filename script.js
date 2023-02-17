@@ -7,11 +7,10 @@ let numeros = document.querySelector('.d-1-voto-numero');
 
 let etapaAtual = 0;
 let numero = '';
+let etapa = etapas[etapaAtual];
 
 function comecarEtapa(){
-    let etapa = etapas[etapaAtual];
-
-    let numeroHTML = ``;
+    let numeroHTML = `<div class="text-Numero">Número:</div>`;
     for (let i = 0; i < etapa.numeros; i++) {
         if(i === 0){
             numeroHTML += `<div class="numero pisca"></div>`
@@ -29,7 +28,34 @@ function comecarEtapa(){
 }
 
 function atualizaInterface(){
-    alert(`finalizou o voto`)
+    console.log(`Atualizando interface`)
+    let candidato = etapa.candidatos.filter((item) => {
+        if(item.numero === numero){
+            return true;
+        }else{
+            return false;
+        }
+    })
+
+    if(candidato.length > 0){
+        candidato = candidato[0];
+            
+        seuVotoPara.style.display = `block`;
+        infoCandidato.innerHTML = `Nome: ${candidato.nome}<br/>
+        Partido: ${candidato.partido}<br/>`
+        aviso.style.display = `block`;
+
+        let fotosHTML = ``
+        for(let i = 0; i < candidato.fotos.length; i++){
+            fotosHTML += `<div class="d-1-image">
+            <img src="images/${candidato.fotos[i].url}" alt="">
+            ${candidato.fotos[i].legenda}
+        </div>`
+        }
+
+        imagens.innerHTML = fotosHTML;
+    }
+
 }
 
 function clicou(num){
@@ -59,3 +85,5 @@ function corrige(){
 function confirma(){
 
 }
+
+comecarEtapa()
