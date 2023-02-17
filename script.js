@@ -7,9 +7,13 @@ let numeros = document.querySelector('.d-1-voto-numero');
 
 let etapaAtual = 0;
 let numero = '';
-let etapa = etapas[etapaAtual];
+let votoBranco = false;
 
 function comecarEtapa(){
+    numero = ``;
+    votoBranco = false;
+    let etapa = etapas[etapaAtual];
+
     let numeroHTML = `<div class="text-Numero">Número:</div>`;
     for (let i = 0; i < etapa.numeros; i++) {
         if(i === 0){
@@ -29,6 +33,7 @@ function comecarEtapa(){
 
 function atualizaInterface(){
     console.log(`Atualizando interface`)
+    let etapa = etapas[etapaAtual];
     let candidato = etapa.candidatos.filter((item) => {
         if(item.numero === numero){
             return true;
@@ -47,13 +52,29 @@ function atualizaInterface(){
 
         let fotosHTML = ``
         for(let i = 0; i < candidato.fotos.length; i++){
-            fotosHTML += `<div class="d-1-image">
-            <img src="images/${candidato.fotos[i].url}" alt="">
-            ${candidato.fotos[i].legenda}
-        </div>`
+            if(candidato.fotos[i].small){
+                fotosHTML += 
+                `<div class="d-1-image small">
+                    <img src="images/${candidato.fotos[i].url}" alt="">
+                    ${candidato.fotos[i].legenda}
+                </div>`
+            }else{
+                fotosHTML += 
+                `<div class="d-1-image">
+                    <img src="images/${candidato.fotos[i].url}" alt="">
+                    ${candidato.fotos[i].legenda}
+                </div>`
+            }
         }
 
         imagens.innerHTML = fotosHTML;
+    }else{
+        seuVotoPara.style.display = `block`;
+        aviso.style.display = `block`;
+        infoCandidato.innerHTML = `<div><h3>NUMERO ERRADO</h3>
+        <div class ='nulo pisca'>VOTO NULO</div>
+        </div>
+        `
     }
 
 }
@@ -75,15 +96,44 @@ function clicou(num){
 }
 
 function branco(){
-
+    numero = ``
+    votoBranco = true;
+    seuVotoPara.style.display = `block`;
+    aviso.style.display = `block`;
+    numeros.innerHTML = '';
+    infoCandidato.innerHTML = `<div class ='nulo pisca'>VOTO EM BRANCO</div>
+    `;
+    imagens.innerHTML = ''
 }
 
 function corrige(){
-
+    comecarEtapa();
 }
 
 function confirma(){
+    let etapa = etapas[etapaAtual];
+    let votoConfimardo = false;
+    if(votoBranco){
+        votoConfimardo = true;
+    } else if(numero.length === etapa.numeros){
+        votoConfimardo = true;
+    }
 
+    if(votoConfimardo){
+        etapaAtual++;
+        if(etapas[etapaAtual] !== undefined){
+            comecarEtapa();
+        }
+        else{
+            infoCandidato.innerHTML = `<div class ='fim'> FIM </div>
+            `;
+            seuVotoPara.style.display = `none`;
+            cargo.innerHTML = ''
+            aviso.style.display = `none`
+            imagens.innerHTML = ``;
+            numeros.innerHTML = '';
+        }
+    }
 }
 
 comecarEtapa()
